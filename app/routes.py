@@ -50,11 +50,13 @@ def upload_file():
         flow.set_processor("serialize_data_1", DataSerializer(input_name="df"))
         flow.set_processor("serialize_data_2", DataSerializer(input_name="df_normalized"))  # Remember to set a correct name!
         flow.set_processor("analyze_pca", PcaAnalyzer())
-        flow.set_processor("normalize_data", DataNormalizer(numeric_method))
+        flow.set_processor("normalize_data", DataNormalizer())
         flow.set_processor("select_features_2", FeatureSelector(input_name="df_normalized"))
         flow.set_processor("return_pca_data", OnlyPCA())
         flow.set_processor("cluster_data", DataClusterizer())
+        pca = flow.load_memory("return_pca_data")
 
+        flow.set_processor("plot_cluster", ClusterPlotter(pca))
         # IMPORTANT
         # Process for the first time to load memory in nodes
         flow.process("extract_f_types")

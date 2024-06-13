@@ -47,8 +47,7 @@ class PcaPlotter(PcaTransformer):
         self.plot_type = self.available_plots[plot_id][0]
 
 
-    def __ne__(self, other):
-        return self.plot_type != other.plot_type
+
 
 
     def __call__(self, *args, **kwargs):
